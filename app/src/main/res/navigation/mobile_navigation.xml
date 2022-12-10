@@ -9,7 +9,11 @@
         android:id="@+id/nav_home"
         android:name="com.felipe.casopractico.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_addPropiedadFragment"
+            app:destination="@id/addPropiedadFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_gallery"
@@ -22,4 +26,13 @@
         android:name="com.felipe.casopractico.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/addPropiedadFragment"
+        android:name="com.felipe.casopractico.ui.home.AddPropiedadFragment"
+        android:label="fragment_add_propiedad"
+        tools:layout="@layout/fragment_add_propiedad" >
+        <action
+            android:id="@+id/action_addPropiedadFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
 </navigation>

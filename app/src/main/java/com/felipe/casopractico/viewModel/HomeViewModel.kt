@@ -1,13 +1,29 @@
 package com.felipe.casopractico.viewModel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.*
+import com.felipe.casopractico.data.PropiedadDatabase
+import com.felipe.casopractico.model.Propiedad
+import com.felipe.casopractico.repository.PropiedadRepository
+import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    private val repository: PropiedadRepository
+    val obtenerPropiedad: LiveData<List<Propiedad>>
+
+    init {
+        val propiedadDao = PropiedadDatabase.getDatabase(application).PropiedadDao()
+        repository = PropiedadRepository(propiedadDao)
+        obtenerPropiedad = repository.obtenerPropiedad
     }
-    val text: LiveData<String> = _text
+
+    fun guardarPropiedad(propiedad: Propiedad){
+        viewModelScope.launch { repository.guardarPropiedad(propiedad) }
+    }
+
+    fun eliminarPropiedad(propiedad: Propiedad){
+        viewModelScope.launch { repository.eliminarPropiedad(propiedad) }
+    }
+
 }
